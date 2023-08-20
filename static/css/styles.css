@@ -1,0 +1,11 @@
+body {
+    background-color: #8aa7dd;
+}
+
+.margin-zero {
+    margin: 0px;
+}
+
+@media only screen and (min-width: 995px) {
+
+}

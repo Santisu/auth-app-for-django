@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Iniciar Sesion{% endblock %} {% block content %}
+<div class="row justify-content-center my-3">
+  {% if error %}
+  <div class="col-8 col-lg-4 mx-auto my-2 p-4 rounded-2 bg-warning">
+      {{ error }}
+  </div>
+  {% endif %}
+  <form class="card col-8 col-lg-4 p-3" method="POST">
+    <header><h2>Iniciar sesión</h2></header>
+    {% csrf_token %} 
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}:</label>
+      {{ field }} 
+    {% endfor %}
+    <button type="submit" class="btn mt-3 border-dark">Iniciar Sesión</button>
+    <a class="form-text text-center" href="{% url 'minion_user_register' %}">
+      Entra aquí si no tienes una cuenta registrada
+    </a>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Perfil {{ user.first_name }} {% endblock %} {% block content %}
+<div class="margin-zero">
+  <div class="row justify-content-center">
+      {% if form %}
+      {% if error %}
+      <div class="col-8 mx-auto my-2 p-4 rounded-2 bg-warning">
+        {% for error in error%}
+          {{ error }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="col-8 mx-auto my-2 p-4 rounded-2 bg-light">
+        {% if form_password %}
+        <form method="post">
+          {% csrf_token %}
+          {{ form_password.as_p }}
+          <button type="submit" class="btn btn-primary">Actualizar Contraseña</button>
+        </form>
+        {% else %}        
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
+          <button type="submit" class="btn btn-primary mx-2">Guardar cambios</button>
+        {% endif %}
+        </form>
+      </div>
+      {% else %}
+      <div id="profile-resume" class="col-8 mx-auto my-2 p-4 rounded-2 bg-light">
+        <header>
+          <h1>Bienvenido(a), {{ user.first_name }} {{ user.last_name }}</h1>
+        </header>
+        <div class="profile-data container">
+        <div>
+          Correo electrónico:
+        </div>
+        <div>
+            {{ user.email }}
+        </div>
+        <div>
+          Foto de perfil:
+        </div>
+        <div>
+          {% if profile.avatar %}
+          <img src="{{ profile.avatar.url }}" alt="{{ profile.user }}"/>
+          {% else %}
+            <b>No has cargado una foto de perfil aún.</b>
+          {% endif %}
+        </div>
+        <div>
+          Descripción principal:
+        </div>
+        <div>
+          {% if profile.bio %}
+            {{ profile.bio }}
+          {% else %}
+          <b>No tienes una descripción principal aún.</b>
+          {% endif %}
+        </div>
+        <div>
+          Descripción corta:
+        </div>
+        <div>
+          {% if profile.bio_short %}
+            {{ profile.bio_short }}
+          {% else %}
+          <b>No tienes una descripción corta aún.</b>
+          {% endif %}
+        </div>
+        <div>
+          Enlace linkedin:
+        </div>
+        <div>
+          {% if profile.linkedin %}
+            {{ profile.linkedin }}
+          {% else %}
+          <b>No tienes has ingresado un enlace a linked in.</b>
+          {% endif %}
+        </div>
+        <div>
+          Curriculum vitae:
+        </div>
+        <div>
+          {% if profile.cv %}
+            <a href="{{ profile.cv.url }}" target="_blank">Descargar CV</a>
+          {% else %}
+          <b>No has ingresado un curriculum vitae.</b>
+          {% endif %}
+        </div>
+        </div>
+        <div class="my-2 container">
+          <a class="btn btn-secondary" href="{% url 'user_profile_edit' %}">Actualizar Perfil</a>
+          <a class="btn btn-secondary" href="{% url 'update_password' %}">Cambiar Contraseña</a>
+        </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

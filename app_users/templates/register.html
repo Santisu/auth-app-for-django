@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Registro de usuario{% endblock %}
+{% block content %}
+<div class="row justify-content-center my-3">
+    {% if error %}
+      <div class="col-8 col-lg-4 mx-auto my-2 p-4 rounded-2 bg-warning">
+        {{ error }}
+      </div>
+    {% endif %}
+    <form class="card col-8 col-lg-4 p-3" method="POST">
+      {% if main_user %}
+      <header><h2>Registro de usuario principal</h2></header>
+    {% else %}
+    <header><h2>Registro de usuario</h2></header>
+    {% endif %}
+        {% csrf_token %}
+        {% for field in form %}
+          <label for="{{ field.id_for_label }}" class="form-label">
+            {{ field.label }}:
+          </label>
+          {{ field }} 
+      {% endfor %}
+        <button type="submit" class="btn mt-3 border-dark">Registrarse</button>
+        <a class="form-text text-center" href="{% url 'login' %}">
+          Si ya estás registrado, inicia sesión aquí
+        </a>
+    </form>
+</div>
+{% endblock %}
